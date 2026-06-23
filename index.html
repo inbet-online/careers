@@ -756,7 +756,7 @@ if(new URLSearchParams(location.search).get('sent') === '1'){
   const ok = document.getElementById('referOk');
   ok.classList.add('show');
   history.replaceState(null, '', location.pathname + '#refer');
-  setTimeout(()=>ok.classList.remove('show'), 6000);
+  setTimeout(()=>ok.classList.remove('show'), 20000);
 }
 
 /* ---------------- ПОЯВЯВАНЕ ПРИ СКРОЛ ---------------- */
