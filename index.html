@@ -670,7 +670,7 @@ function populateReferSelect(){
 async function loadRoles(){
   list.innerHTML = '<div class="roles__msg">Зареждане на позициите…</div>';
   try{
-    const res = await fetch(XLSX_FILE, {cache:'no-store'});
+    const res = await fetch(XLSX_FILE + '?v=' + Date.now(), {cache:'no-store'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const wb = XLSX.read(await res.arrayBuffer(), {type:'array'});
     const ws = wb.Sheets[wb.SheetNames[0]];
