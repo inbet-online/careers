@@ -486,18 +486,26 @@
           <li><b>3.</b> Те биват наети - ти получаваш бонуса.</li>
         </ul>
       </div>
-      <div class="refer__right">
+      <form class="refer__right" id="referForm" action="https://formsubmit.co/careers@inbet.com" method="POST" enctype="multipart/form-data">
+        <!-- FormSubmit конфигурация -->
+        <input type="hidden" name="_subject" value="Нова препоръка за приятел - Inbet кариери" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" id="referNext" value="" />
+        <input type="hidden" name="_replyto" id="referReplyto" value="" />
+        <!-- honeypot против спам -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field2">
-          <div class="field"><label for="yn">Твоето име</label><input id="yn" type="text" placeholder="Йордан Петров" /></div>
-          <div class="field"><label for="ye">Твоят имейл</label><input id="ye" type="email" placeholder="ti@inbet.com" /></div>
+          <div class="field"><label for="yn">Твоето име</label><input id="yn" name="Препоръчал (име)" type="text" placeholder="Йордан Петров" /></div>
+          <div class="field"><label for="ye">Твоят имейл</label><input id="ye" name="Препоръчал (имейл)" type="email" placeholder="ti@inbet.com" /></div>
         </div>
         <div class="field2">
-          <div class="field"><label for="fn">Името на приятеля</label><input id="fn" type="text" placeholder="Тяхното име" /></div>
-          <div class="field"><label for="fe">Имейл на приятеля</label><input id="fe" type="email" placeholder="tehen@email.com" /></div>
+          <div class="field"><label for="fn">Името на приятеля</label><input id="fn" name="Кандидат (име)" type="text" placeholder="Тяхното име" /></div>
+          <div class="field"><label for="fe">Имейл на приятеля</label><input id="fe" name="Кандидат (имейл)" type="email" placeholder="tehen@email.com" /></div>
         </div>
         <div class="field">
           <label for="fr">Позиция, която им подхожда</label>
-          <select id="fr">
+          <select id="fr" name="Позиция">
             <option value="">Избери позиция…</option>
             <option>Друго / Не съм сигурен</option>
           </select>
@@ -508,12 +516,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 9l5-5 5 5"/><path d="M12 4v12"/></svg>
             <span class="cv-name" id="cvName">PDF или DOC · макс. 5 MB</span>
           </label>
-          <input id="cv" type="file" accept=".pdf,.doc,.docx" hidden />
+          <input id="cv" name="CV" type="file" accept=".pdf,.doc,.docx" hidden />
         </div>
-        <button class="btn btn--solid" id="referBtn">Изпрати препоръка</button>
-        <div class="refer__ok" id="referOk">✓ Препоръката е изпратена - поемаме оттук. Благodарим!</div>
+        <button type="submit" class="btn btn--solid" id="referBtn">Изпрати препоръка</button>
+        <div class="refer__ok" id="referOk">✓ Препоръката е изпратена - поемаме оттук. Благодарим!</div>
         <p class="refer__note">Или ни пиши директно на <a href="mailto:careers@inbet.com" style="color:var(--accent)">careers@inbet.com</a></p>
-      </div>
+      </form>
     </div>
   </div>
 </section>
@@ -726,19 +734,30 @@ cvInput.addEventListener('change', () => {
 });
 
 /* ---------------- ФОРМА ЗА ПРЕПОРЪКА ---------------- */
-document.getElementById('referBtn').addEventListener('click', () => {
-  const ok = document.getElementById('referOk');
+const referForm = document.getElementById('referForm');
+
+referForm.addEventListener('submit', (e) => {
   const fe = document.getElementById('fe').value.trim();
   const fn = document.getElementById('fn').value.trim();
   if(!fn || !fe || !/.+@.+\..+/.test(fe)){
+    e.preventDefault();
     alert("Моля, добави името на приятеля си и валиден имейл, за да можем да се свържем.");
     return;
   }
-  ok.classList.add('show');
-  ['yn','ye','fn','fe','fr'].forEach(id => document.getElementById(id).value = '');
-  cvInput.value=''; cvName.textContent = cvDefault; cvDrop.classList.remove('has-file');
-  setTimeout(()=>ok.classList.remove('show'), 6000);
+  /* връщане към тази страница след изпращане + reply-to към препоръчалия */
+  document.getElementById('referNext').value = location.origin + location.pathname + '?sent=1#refer';
+  const ye = document.getElementById('ye').value.trim();
+  if(ye) document.getElementById('referReplyto').value = ye;
+  /* формата се изпраща нативно (multipart), за да се прикачи CV файлът */
 });
+
+/* показваме потвърждението, когато се върнем след успешно изпращане */
+if(new URLSearchParams(location.search).get('sent') === '1'){
+  const ok = document.getElementById('referOk');
+  ok.classList.add('show');
+  history.replaceState(null, '', location.pathname + '#refer');
+  setTimeout(()=>ok.classList.remove('show'), 6000);
+}
 
 /* ---------------- ПОЯВЯВАНЕ ПРИ СКРОЛ ---------------- */
 const io = new IntersectionObserver((entries) => {
