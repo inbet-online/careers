@@ -537,7 +537,7 @@
         </label>
         <label class="refer__check">
           <input type="checkbox" id="chkPrivacy" />
-          <span>Запознат съм с <a href="https://inbet.com/help/privacy-policy" target="_blank" rel="noopener">Политика за защита на лични данни</a> на INBET.</span>
+          <span>Запознат съм с <a href="https://egt-interactive.com/bg/privacy-policy/recruitment-dp/" target="_blank" rel="noopener">Политика за защита на лични данни</a> на INBET.</span>
         </label>
         <label class="refer__check">
           <input type="checkbox" id="chkCv" />
@@ -691,7 +691,7 @@ function renderRoles(filter='all'){
               ${r.resp.length?`<div><h4>Какво ще правиш</h4><ul>${r.resp.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
               ${r.req.length?`<div><h4>Какво ти трябва</h4><ul>${r.req.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
             </div>`:''}
-            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}" class="btn btn--solid">Кандидатствай за позицията →</a>
+            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}&body=${encodeURIComponent('Здравейте,\n\nЗаявявам интерес към отворената позиция за '+r.title+'. В приложение ще намерите моето CV.\n')}" class="btn btn--solid">Кандидатствай за позицията →</a>
           </div>
         </div>
       </div>
