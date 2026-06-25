@@ -317,6 +317,29 @@
   .refer__note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
   .refer__ok{display:none;align-items:center;gap:10px;color:var(--accent);font-family:var(--mono);font-size:13px;margin-top:14px;justify-content:center}
   .refer__ok.show{display:flex}
+  /* съгласия / чекбоксове */
+  .refer__check{display:flex;gap:11px;align-items:flex-start;margin:0 0 14px;color:#d6ddff;font-size:13.5px;line-height:1.5;cursor:pointer}
+  .refer__check input{
+    appearance:none;-webkit-appearance:none;flex-shrink:0;
+    width:18px;height:18px;margin-top:2px;border-radius:5px;
+    border:1px solid var(--line);background:rgba(255,255,255,.04);
+    cursor:pointer;display:grid;place-items:center;transition:border-color .2s,background .2s;
+  }
+  .refer__check input:checked{background:var(--accent);border-color:var(--accent)}
+  .refer__check input:checked::after{content:"";width:5px;height:9px;border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px)}
+  .refer__check input:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(248,224,72,.15)}
+  .refer__check a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  /* деактивиран бутон */
+  .btn--solid:disabled,.btn--solid[disabled]{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none;filter:grayscale(.4)}
+  .btn--solid:disabled:hover,.btn--solid[disabled]:hover{transform:none;box-shadow:none}
+  /* GDPR модал */
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(4,7,20,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .modal.open{display:flex}
+  .modal__box{position:relative;max-width:560px;width:100%;max-height:80vh;overflow:auto;border-radius:20px;padding:38px 36px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+  .modal__box h3{font-family:var(--display);font-size:24px;color:var(--accent);margin:0 0 16px;padding-right:30px}
+  .modal__box p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 12px}
+  .modal__close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;display:grid;place-items:center;font-size:18px;line-height:1;transition:background .2s,border-color .2s}
+  .modal__close:hover{background:rgba(255,255,255,.1);border-color:var(--accent)}
   @media(max-width:860px){.refer__panel{grid-template-columns:1fr}.refer__left,.refer__right{padding:34px}.field2{grid-template-columns:1fr}}
 
   /* ---------- FOOTER ---------- */
@@ -491,45 +514,52 @@
           <li><b>3.</b> Те имат ново кариерно развитие - ти получаваш бонус.</li>
         </ul>
       </div>
-      <form class="refer__right" id="referForm" action="https://formsubmit.co/careers@inbet.com" method="POST" enctype="multipart/form-data">
-        <!-- FormSubmit конфигурация -->
-        <input type="hidden" name="_subject" value="Нова препоръка за приятел - inbet кариери" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" id="referNext" value="" />
-        <input type="hidden" name="_replyto" id="referReplyto" value="" />
-        <!-- honeypot против спам -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+      <form class="refer__right" id="referForm">
         <div class="field2">
-          <div class="field"><label for="yn">Твоето име</label><input id="yn" name="Препоръчал (име)" type="text" placeholder="Йордан Петров" /></div>
-          <div class="field"><label for="ye">Твоят имейл</label><input id="ye" name="Препоръчал (имейл)" type="email" placeholder="ti@inbet.com" /></div>
+          <div class="field"><label for="yn">Твоето име</label><input id="yn" type="text" placeholder="Йордан Петров" /></div>
+          <div class="field"><label for="ye">Твоят имейл</label><input id="ye" type="email" placeholder="ti@inbet.com" /></div>
         </div>
         <div class="field2">
-          <div class="field"><label for="fn">Името на приятеля</label><input id="fn" name="Кандидат (име)" type="text" placeholder="Тяхното име" /></div>
-          <div class="field"><label for="fe">Имейл на приятеля</label><input id="fe" name="Кандидат (имейл)" type="email" placeholder="tehen@email.com" /></div>
+          <div class="field"><label for="fn">Името на приятеля</label><input id="fn" type="text" placeholder="Тяхното име" /></div>
+          <div class="field"><label for="fe">Имейл на приятеля</label><input id="fe" type="email" placeholder="tehen@email.com" /></div>
         </div>
         <div class="field">
           <label for="fr">Позиция, която им подхожда</label>
-          <select id="fr" name="Позиция">
+          <select id="fr">
             <option value="">Избери позиция…</option>
             <option>Друго / Не съм сигурен</option>
           </select>
         </div>
-        <div class="field">
-          <label for="cv">Прикачи CV</label>
-          <label class="cv-drop" for="cv">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 9l5-5 5 5"/><path d="M12 4v12"/></svg>
-            <span class="cv-name" id="cvName">PDF или DOC · макс. 5 MB</span>
-          </label>
-          <input id="cv" name="CV" type="file" accept=".pdf,.doc,.docx" hidden />
-        </div>
-        <button type="submit" class="btn btn--solid" id="referBtn">Изпрати препоръка</button>
-        <div class="refer__ok" id="referOk">✓ Препоръката е изпратена - поемаме оттук. Благодарим!</div>
+
+        <label class="refer__check">
+          <input type="checkbox" id="chkGdpr" />
+          <span>Преди да изпратите препоръката, моля, запознайте се с нашите <a href="#" id="gdprLink" role="button">Права и отговорности (GDPR политика)</a> относно Вашите данни.</span>
+        </label>
+        <label class="refer__check">
+          <input type="checkbox" id="chkPrivacy" />
+          <span>Запознат съм с <a href="https://egt-interactive.com/bg/privacy-policy/recruitment-dp/" target="_blank" rel="noopener">Политика за защита на лични данни</a> на INBET.</span>
+        </label>
+        <label class="refer__check">
+          <input type="checkbox" id="chkCv" />
+          <span>Ще прикача CV на кандидата в имейла.</span>
+        </label>
+
+        <button type="button" class="btn btn--solid" id="referBtn" disabled>Изпрати препоръка</button>
+        <div class="refer__ok" id="referOk">✓ Препоръката е готова - отвори се имейл към careers@inbet.com. Благодарим!</div>
         <p class="refer__note">Или ни пиши директно на <a href="mailto:careers@inbet.com" style="color:var(--accent)">careers@inbet.com</a></p>
       </form>
     </div>
   </div>
 </section>
+
+<!-- GDPR МОДАЛ -->
+<div class="modal" id="gdprModal" role="dialog" aria-modal="true" aria-labelledby="gdprTitle">
+  <div class="modal__box">
+    <button type="button" class="modal__close" id="gdprClose" aria-label="Затвори">&times;</button>
+    <h3 id="gdprTitle">Права и отговорности (GDPR политика)</h3>
+    <p>С подаването на автобиография към настоящата обява и натискане на бутона „Кандидатствай“, Вие предоставяте съгласие данните Ви да бъдат обработени от INBET с цел подбор и оценка на кандидатурата Ви за позицията, за която кандидатствате. Съгласието Ви може да бъде оттеглено по всяко време.</p>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer class="foot">
@@ -746,44 +776,79 @@ document.getElementById('benGrid').innerHTML = BENEFITS.map(b => `
     <p>${b.d}</p>
   </div>`).join('');
 
-/* CV прикачване */
-const cvInput = document.getElementById('cv');
-const cvName = document.getElementById('cvName');
-const cvDrop = document.querySelector('.cv-drop');
-const cvDefault = 'PDF или DOC · макс. 5 MB';
-cvInput.addEventListener('change', () => {
-  const f = cvInput.files[0];
-  if(!f){ cvName.textContent = cvDefault; cvDrop.classList.remove('has-file'); return; }
-  if(f.size > 5*1024*1024){ alert('Файлът е твърде голям (макс. 5 MB).'); cvInput.value=''; cvName.textContent = cvDefault; cvDrop.classList.remove('has-file'); return; }
-  cvName.textContent = f.name;
-  cvDrop.classList.add('has-file');
-});
+/* ---------------- GDPR МОДАЛ ---------------- */
+const gdprModal = document.getElementById('gdprModal');
+const gdprLink  = document.getElementById('gdprLink');
+const gdprClose = document.getElementById('gdprClose');
+function openGdpr(e){ if(e) e.preventDefault(); gdprModal.classList.add('open'); }
+function closeGdpr(){ gdprModal.classList.remove('open'); }
+gdprLink.addEventListener('click', openGdpr);
+gdprClose.addEventListener('click', closeGdpr);
+gdprModal.addEventListener('click', (e)=>{ if(e.target === gdprModal) closeGdpr(); });
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeGdpr(); });
 
 /* ---------------- ФОРМА ЗА ПРЕПОРЪКА ---------------- */
-const referForm = document.getElementById('referForm');
+const referBtn  = document.getElementById('referBtn');
+const chkCv     = document.getElementById('chkCv');
+const chkGdpr   = document.getElementById('chkGdpr');
+const chkPrivacy= document.getElementById('chkPrivacy');
 
-referForm.addEventListener('submit', (e) => {
-  const fe = document.getElementById('fe').value.trim();
+/* бутонът е активен само когато и трите чекбокса са отметнати */
+function syncReferBtn(){ referBtn.disabled = !(chkCv.checked && chkGdpr.checked && chkPrivacy.checked); }
+chkCv.addEventListener('change', syncReferBtn);
+chkGdpr.addEventListener('change', syncReferBtn);
+chkPrivacy.addEventListener('change', syncReferBtn);
+syncReferBtn();
+
+referBtn.addEventListener('click', () => {
+  if(referBtn.disabled) return;
+
+  const yn = document.getElementById('yn').value.trim();
+  const ye = document.getElementById('ye').value.trim();
   const fn = document.getElementById('fn').value.trim();
+  const fe = document.getElementById('fe').value.trim();
+  const fr = document.getElementById('fr').value.trim();
+
   if(!fn || !fe || !/.+@.+\..+/.test(fe)){
-    e.preventDefault();
     alert("Моля, добави името на приятеля си и валиден имейл, за да можем да се свържем.");
     return;
   }
-  /* връщане към тази страница след изпращане + reply-to към препоръчалия */
-  document.getElementById('referNext').value = location.origin + location.pathname + '?sent=1#refer';
-  const ye = document.getElementById('ye').value.trim();
-  if(ye) document.getElementById('referReplyto').value = ye;
-  /* формата се изпраща нативно (multipart), за да се прикачи CV файлът */
-});
 
-/* показваме потвърждението, когато се върнем след успешно изпращане */
-if(new URLSearchParams(location.search).get('sent') === '1'){
+  const position = fr || 'Друго / Не съм сигурен';
+  const subject = 'Препоръка за "' + position + '"';
+
+  /* тялото като таблица (подравнен текст, тъй като имейл клиентът отваря plain-text) */
+  const rows = [
+    ['Препоръчал (име)',  yn || '—'],
+    ['Препоръчал (имейл)',ye || '—'],
+    ['Кандидат (име)',    fn],
+    ['Кандидат (имейл)',  fe],
+    ['Позиция',           position]
+  ];
+  const pad = Math.max(...rows.map(r => r[0].length));
+  const sep = '+' + '-'.repeat(pad + 2) + '+' + '-'.repeat(40) + '+';
+  let table = sep + '\n';
+  rows.forEach(r => {
+    table += '| ' + r[0].padEnd(pad) + ' | ' + r[1] + '\n';
+    table += sep + '\n';
+  });
+
+  const body =
+    'Здравейте,\n\n' +
+    'Препоръчвам кандидат за позиция "' + position + '".\n\n' +
+    table + '\n' +
+    'Моля, прикачете CV.\n';
+
+  const href = 'mailto:careers@inbet.com'
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
+
+  window.location.href = href;
+
   const ok = document.getElementById('referOk');
   ok.classList.add('show');
-  history.replaceState(null, '', location.pathname + '#refer');
   setTimeout(()=>ok.classList.remove('show'), 20000);
-}
+});
 
 /* ---------------- ПОЯВЯВАНЕ ПРИ СКРОЛ ---------------- */
 const io = new IntersectionObserver((entries) => {
