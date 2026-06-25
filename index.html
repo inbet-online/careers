@@ -691,7 +691,7 @@ function renderRoles(filter='all'){
               ${r.resp.length?`<div><h4>Какво ще правиш</h4><ul>${r.resp.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
               ${r.req.length?`<div><h4>Какво ти трябва</h4><ul>${r.req.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
             </div>`:''}
-            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}&body=${encodeURIComponent('Здравейте,\n\nЗаявявам интерес към отворената позиция за '+r.title+'. В приложение ще намерите моето CV.\n')}" class="btn btn--solid">Кандидатствай за позицията →</a>
+            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}&body=${encodeURIComponent('Здравейте,\n\nЗаявявам интерес към отворената позиция за '+r.title+'. Моля, намерете прикачена моята автобиография (CV).\n')}" class="btn btn--solid">Кандидатствай за позицията →</a>
           </div>
         </div>
       </div>
