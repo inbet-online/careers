@@ -817,26 +817,15 @@ referBtn.addEventListener('click', () => {
   const position = fr || 'Друго / Не съм сигурен';
   const subject = 'Препоръка за "' + position + '"';
 
-  /* тялото като таблица (подравнен текст, тъй като имейл клиентът отваря plain-text) */
-  const rows = [
-    ['Препоръчал (име)',  yn || '—'],
-    ['Препоръчал (имейл)',ye || '—'],
-    ['Кандидат (име)',    fn],
-    ['Кандидат (имейл)',  fe],
-    ['Позиция',           position]
-  ];
-  const pad = Math.max(...rows.map(r => r[0].length));
-  const sep = '+' + '-'.repeat(pad + 2) + '+' + '-'.repeat(40) + '+';
-  let table = sep + '\n';
-  rows.forEach(r => {
-    table += '| ' + r[0].padEnd(pad) + ' | ' + r[1] + '\n';
-    table += sep + '\n';
-  });
-
+  /* тялото като свободен текст - всеки запис на отделен ред */
   const body =
     'Здравейте,\n\n' +
     'Препоръчвам кандидат за позиция "' + position + '".\n\n' +
-    table + '\n' +
+    'Препоръчал (име): ' + (yn || '—') + '\n' +
+    'Препоръчал (имейл): ' + (ye || '—') + '\n' +
+    'Кандидат (име): ' + fn + '\n' +
+    'Кандидат (имейл): ' + fe + '\n' +
+    'Позиция: ' + position + '\n\n' +
     'Моля, прикачете CV.\n';
 
   const href = 'mailto:careers@inbet.com'
