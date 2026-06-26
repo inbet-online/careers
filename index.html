@@ -545,7 +545,7 @@
         </label>
 
         <button type="button" class="btn btn--solid" id="referBtn" disabled>Изпрати препоръка</button>
-        <div class="refer__ok" id="referOk">✓ Препоръката е готова - отвори се имейл към careers@inbet.com. Благодарим!</div>
+        <div class="refer__ok" id="referOk">✓ Препоръката е готова - отвори се имейл към careers@inbet.com. Ако след натискане на бутона не виждате отворен имейл, който да изпратите, моля, свържете се с нас директно на careers@inbet.com. Благодарим!</div>
         <p class="refer__note">Или ни пиши директно на <a href="mailto:careers@inbet.com" style="color:var(--accent)">careers@inbet.com</a></p>
       </form>
     </div>
@@ -691,7 +691,8 @@ function renderRoles(filter='all'){
               ${r.resp.length?`<div><h4>Какво ще правиш</h4><ul>${r.resp.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
               ${r.req.length?`<div><h4>Какво ти трябва</h4><ul>${r.req.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
             </div>`:''}
-            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}&body=${encodeURIComponent('Здравейте,\n\nЗаявявам интерес към отворената позиция за '+r.title+'. Моля, намерете прикачена моята автобиография (CV).\n')}" class="btn btn--solid">Кандидатствай за позицията →</a>
+            <a href="mailto:careers@inbet.com?subject=Кандидатура - ${encodeURIComponent(r.title)}&body=${encodeURIComponent('Здравейте,\n\nЗаявявам интерес към отворената позиция за '+r.title+'. Моля, намерете прикачена моята автобиография (CV).\n')}" class="btn btn--solid apply__btn">Кандидатствай за позицията →</a>
+            <div class="refer__ok apply__ok" style="text-align:center">✓ Ако след натискане на бутона не виждате отворен имейл, който да изпратите, моля, свържете се с нас директно на careers@inbet.com. Благодарим!</div>
           </div>
         </div>
       </div>
@@ -704,6 +705,15 @@ function bindRoles(){
       const role = btn.closest('.role');
       const open = role.classList.toggle('open');
       btn.setAttribute('aria-expanded', open);
+    });
+  });
+  list.querySelectorAll('.apply__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ok = btn.parentElement.querySelector('.apply__ok');
+      if(!ok) return;
+      ok.classList.add('show');
+      clearTimeout(ok._hideTimer);
+      ok._hideTimer = setTimeout(()=>ok.classList.remove('show'), 120000);
     });
   });
 }
@@ -836,7 +846,7 @@ referBtn.addEventListener('click', () => {
 
   const ok = document.getElementById('referOk');
   ok.classList.add('show');
-  setTimeout(()=>ok.classList.remove('show'), 20000);
+  setTimeout(()=>ok.classList.remove('show'), 120000);
 });
 
 /* ---------------- ПОЯВЯВАНЕ ПРИ СКРОЛ ---------------- */
